@@ -2,6 +2,10 @@ import cv2
 import numpy as np
 danger_zone = np.array([[100, 400], [500, 400], [600, 700], [0, 700]], np.int32)
 cap = cv2.VideoCapture('test_video.mp4') # Initialize video capture
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter('output_demo.mp4', fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
+
+# Inside the loop (after all your drawing/logic):
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -26,7 +30,10 @@ while cap.isOpened():
 
     cv2.polylines(frame, [danger_zone], True, (255, 255, 0), 2)
     cv2.imshow('Safety Monitor', frame)
+    out.write(frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 cap.release()
+out.release()
+cv2.destroyAllWindows()
