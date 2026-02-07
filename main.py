@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 danger_zone = np.array([[100, 400], [500, 400], [600, 700], [0, 700]], np.int32)
-cap = cv2.VideoCapture(0) # Initialize video capture
+cap = cv2.VideoCapture('test_video.mp4') # Initialize video capture
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
